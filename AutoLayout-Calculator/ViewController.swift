@@ -31,46 +31,87 @@ class ViewController: UIViewController {
     }
     
     @IBAction func buttonErasePressed(_ sender: Any) {
-        
+        var text = resultLabel.text!
+        if (text.count > 0) {
+            resultLabel.text = String(text.dropLast())
+        }
     }
     
     @IBAction func buttonNumberPressed(_ sender: UIButton) {
-        if (sender != nil) {
-            let text = sender.titleLabel!.text!
-            if (text == ".") {
-                if (canAddDecimal) {
-                    let labelText = resultLabel.text
-                    resultLabel.text = labelText! + text
-                    canAddOperation = false
-                }
-                canAddDecimal = false
-                
-            } else {
+        let text = sender.titleLabel!.text!
+        if (text == ".") {
+            if (canAddDecimal) {
                 let labelText = resultLabel.text
                 resultLabel.text = labelText! + text
-                canAddOperation = true
+                canAddOperation = false
             }
+            canAddDecimal = false
+            
+        } else {
+            let labelText = resultLabel.text
+            resultLabel.text = labelText! + text
+            canAddOperation = true
         }
-        
-//        if (view.text == ".") {
-//                        if (canAddDecimal) {
-//                            workingTV.append(view.text)
-//                            canAddOperation = false
-//                        }
-//                        canAddDecimal = false
-//                    } else {
-//                        workingTV.append(view.text)
-//                        canAddOperation = true
-//                    }
     }
     
-    @IBAction func buttonOperatorPressed(_ sender: Any) {
-        
+    @IBAction func buttonOperatorPressed(_ sender: UIButton) {
+        if (canAddOperation) {
+            let text = sender.titleLabel!.text!
+            let labelText = resultLabel.text
+            resultLabel.text = labelText! + text
+            canAddOperation = false
+            canAddDecimal = true
+        }
     }
     
     @IBAction func buttonEqualsPressed(_ sender: Any) {
+        let digitsOperators = digitsOperators()
+
+        if (digitsOperators.isEmpty) {
+            resultLabel.text = ""
+            return
+        }
         
+//        val timesDivision = timesDivisionCalculate(digitsOperators)
+//        if (timesDivision.isEmpty) {
+//            resultLabel.text = ""
+//            return
+//        }
+//
+//        let result = addSubCalculate(timesDivision)
+//        resultLabel.text = String(result)
     }
+    
+    func digitsOperators() -> Array<String> {
+        var list = [Any]()
+        var currentDigit = ""
+        let text = String(resultLabel.text!)
+        for charact in text {
+            if (charact.isNumber || charact == ".") {
+                currentDigit += String(charact)
+            } else {
+                list.append(Double(currentDigit))
+                currentDigit = ""
+                list.append(charact)
+            }
+        }
+
+        if (currentDigit != "") {
+            list.append(Double(currentDigit))
+        }
+
+        return list
+    }
+    
+    func timesDivisionCalculate(digitsOperators: Array<String>) -> Array<String>{
+        var list = digitsOperators
+        while (list.contains(where: "x") || list.contains(where: "/")) {
+            list = calcTimesDiv(list)
+        }
+        return list
+    }
+    
+    
     
 }
 
