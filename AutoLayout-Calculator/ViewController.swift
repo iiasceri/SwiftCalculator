@@ -31,6 +31,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func buttonErasePressed(_ sender: Any) {
+        canAddOperation = true
         var text = resultLabel.text!
         if (text.count > 0) {
             resultLabel.text = String(text.dropLast())
@@ -65,12 +66,12 @@ class ViewController: UIViewController {
     }
     
     @IBAction func buttonEqualsPressed(_ sender: Any) {
-        let digitsOperators = digitsOperators()
-
-        if (digitsOperators.isEmpty) {
-            resultLabel.text = ""
-            return
-        }
+//        let digitsOperators = digitsOperators()
+//
+//        if (digitsOperators.isEmpty) {
+//            resultLabel.text = ""
+//            return
+//        }
         
 //        val timesDivision = timesDivisionCalculate(digitsOperators)
 //        if (timesDivision.isEmpty) {
@@ -82,35 +83,35 @@ class ViewController: UIViewController {
 //        resultLabel.text = String(result)
     }
     
-    func digitsOperators() -> Array<String> {
-        var list = [Any]()
-        var currentDigit = ""
-        let text = String(resultLabel.text!)
-        for charact in text {
-            if (charact.isNumber || charact == ".") {
-                currentDigit += String(charact)
-            } else {
-                list.append(Double(currentDigit))
-                currentDigit = ""
-                list.append(charact)
-            }
-        }
-
-        if (currentDigit != "") {
-            list.append(Double(currentDigit))
-        }
-
-        return list
-    }
+//    func digitsOperators() -> Array<String> {
+//        var list = [Any]()
+//        var currentDigit = ""
+//        let text = String(resultLabel.text!)
+//        for charact in text {
+//            if (charact.isNumber || charact == ".") {
+//                currentDigit += String(charact)
+//            } else {
+//                list.append(Double(currentDigit))
+//                currentDigit = ""
+//                list.append(charact)
+//            }
+//        }
+//
+//        if (currentDigit != "") {
+//            list.append(Double(currentDigit))
+//        }
+//
+//        return list
+//    }
     
-    func timesDivisionCalculate(digitsOperators: Array<String>) -> Array<String>{
-        var list = digitsOperators
-        while (list.contains(where: "x") || list.contains(where: "/")) {
-            list = calcTimesDiv(list)
-        }
-        return list
-    }
-    
+//    func timesDivisionCalculate(digitsOperators: Array<String>) -> Array<String>{
+//        var list = digitsOperators
+//        while (list.contains(where: "x") || list.contains(where: "/")) {
+//            list = calcTimesDiv(list)
+//        }
+//        return list
+//    }
+//    
     
     
 }
